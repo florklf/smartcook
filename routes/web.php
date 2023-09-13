@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 // })->name('home');
 
 Route::get('/', [RecipeController::class, 'index'])->name('home');
+Route::get('/recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

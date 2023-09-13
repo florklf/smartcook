@@ -2,35 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipe;
 use Illuminate\View\View;
 
 class RecipeController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Show the recipes.
      * @return View
      */
     public function index(): View
     {
-        // $recipes = Auth::user()->recipes()->latest()->get();
-        $recipes = [
-            (object) [
-                'title' => 'Recette 1',
-                'description' => 'Description de la recette 1',
-            ],
-            (object) [
-                'title' => 'Recette 2',
-                'description' => 'Description de la recette 2',
-            ],
-            (object) [
-                'title' => 'Recette 3',
-                'description' => 'Description de la recette 3',
-            ],
-            (object) [
-                'title' => 'Recette 4',
-                'description' => 'Description de la recette 4',
-            ]
-        ];
-        return view('home', compact('recipes'));
+        $recipes = Recipe::all();
+        return view('home', ['recipes' => $recipes]);
+    }
+
+    /**
+     * Show the recipe.
+     * @param Recipe $recipe
+     * @return View
+     */
+    public function show(Recipe $recipe): View
+    {
+        return view('recipes.show', ['recipe' => $recipe]);
     }
 }
