@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\NotationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [RecipeController::class, 'index'])->name('home');
 Route::get('/recipes/{recipe}', [RecipeController::class, 'show'])->name('recipes.show');
+
+Route::post('/notations', [NotationController::class, 'store'])->name('notations.store');
+Route::post('/favorite-recipes', [RecipeController::class, 'favorite'])->name('recipes.favorite');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

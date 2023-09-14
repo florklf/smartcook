@@ -4,9 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Notation;
+use App\Models\Recipe;
 
 class User extends Authenticatable
 {
@@ -42,4 +46,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get the notations for the user.
+     */
+    public function notations(): HasMany
+    {
+        return $this->hasMany(Notation::class);
+    }
+
+    /**
+     * Get the favorite recipe for the user.
+     */
+    public function favoriteRecipe(): BelongsToMany
+    {
+        return $this->belongsToMany(Recipe::class, 'favorite_recipes');
+    }
 }

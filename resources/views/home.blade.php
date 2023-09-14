@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <x-bladewind.input type="search" placeholder="Rechercher..."  />
+            <x-bladewind.input type="search" placeholder="Rechercher..." />
         </div>
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -16,12 +16,13 @@
                     @foreach ($recipes as $recipe)
                         <a href="{{ route('recipes.show', $recipe) }}">
                             <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                                <img class="w-full" src="https://tailwindcss.com/img/card-top.jpg" alt="Sunset in the mountains">
+                                <img class="w-full" src="https://tailwindcss.com/img/card-top.jpg"
+                                    alt="Sunset in the mountains">
                                 <div class="px-6 py-4">
-                                <div class="font-bold text-xl mb-2">{{ $recipe->name }}</div>
-                                <p class="text-gray-700 text-base">
-                                    {{ $recipe->description }}
-                                </p>
+                                    <div class="font-bold text-xl mb-2">{{ $recipe->name }}</div>
+                                    <p class="text-gray-700 text-base">
+                                        {{ $recipe->description }}
+                                    </p>
                                 </div>
                             </div>
                         </a>

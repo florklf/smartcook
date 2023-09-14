@@ -15,6 +15,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('recipe_id')->constrained();
             $table->integer('notation');
+            $table->timestamps();
             $table->text('comment')->nullable();
         });
     }
