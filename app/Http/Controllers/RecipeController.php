@@ -36,11 +36,11 @@ class RecipeController extends Controller
         $client = OpenAIService::getClient();
         
         // Ingredients
-        $ingredients_prompt = 'Provide the list of ingredients needed for the recipe titled "' . $recipe->name . '".\n' . 'To make it easier, you can extract the ingredients from the following recipe instructions if needed:\n' . implode("\n", $recipe->instructions) . '\n';
+        $ingredients_prompt = 'Provide the list of ingredients needed to cook a recipe titled "' . $recipe->name . '".\n' . 'To make it easier, you can extract the ingredients from the following recipe instructions if needed:\n' . implode("\n", $recipe->instructions) . '\n';
         $ingredients_response = $client->chat()->create([
             'model' => 'gpt-3.5-turbo-16k',
             'messages' => [
-                ['role' => 'system', 'content' => 'The following is a list of ingredients needed for the recipe titled "' . $recipe->name . '". Return only the code in the completion as a comma-separated list in french language. I don\'t want any other comments. Don\'t say "here is your list" or similar remarks.'],
+                ['role' => 'system', 'content' => 'The following is a list of ingredients needed to cook the recipe titled "' . $recipe->name . '". Return only the ingredients in the completion as a comma-separated list in french language. I don\'t want any other comments. Don\'t say "here is your list" or similar remarks.'],
                 ['role' => 'user', 'content' => $ingredients_prompt],
             ],
         ]);
@@ -51,11 +51,11 @@ class RecipeController extends Controller
         }, $ingredients);
 
         // Related recipes
-        $related_recipes_prompt = 'Please provide me with a recipe that is similar to "' . $recipe->name . '".\n' . 'Here is the list of all recipes in the database:\n' . implode("\n", Recipe::all()->pluck('name')->toArray()) . '\n';
+        $related_recipes_prompt = 'Provide a comma-separated list of recipes that are similar (culinary-speaking) to "' . $recipe->name . '".\n' . 'Here is the list of all recipes in the database:\n' . implode("\n", Recipe::all()->except($recipe->id)->pluck('name')->toArray()) . '\n';
         $related_recipes_response = $client->chat()->create([
             'model' => 'gpt-3.5-turbo',
             'messages' => [
-                ['role' => 'system', 'content' => 'The following is a recipe that is similar to "' . $recipe->name . '". Return only the exact same name found of the recipe in the completion as a comma-separated list in french language. I don\'t want any other comments. Don\'t say "here is your list" or similar remarks.'],
+                ['role' => 'system', 'content' => 'The following are recipes that is similar to "' . $recipe->name . '". Only return the name found in the completion as a comma-separated list. I don\'t want any other comments. Don\'t say "here is your list" or similar remarks.'],
                 ['role' => 'user', 'content' => $related_recipes_prompt],
             ],
         ]);

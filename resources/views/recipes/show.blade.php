@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <img class="w-full" src="https://tailwindcss.com/img/card-top.jpg" alt="Sunset in the mountains">
+                        <img class="w-full rounded-md" src="https://tailwindcss.com/img/card-top.jpg" alt="Sunset in the mountains">
                     </div>
                     <div class="px-6 py-4">
                         <div class="flex items-center mb-4">
