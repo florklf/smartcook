@@ -10,7 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <img class="w-full rounded-md" src="https://tailwindcss.com/img/card-top.jpg" alt="Sunset in the mountains">
+                        <img class="w-full rounded-md" src="https://tailwindcss.com/img/card-top.jpg"
+                            alt="Sunset in the mountains">
                     </div>
                     <div class="px-6 py-4">
                         <div class="flex items-center mb-4">
@@ -45,8 +46,29 @@
                                 @endforeach
                             </ol>
 
-                            <h3 class="font-bold text-xl mb-2 mt-4">Ingredients</h3>
-                            <ul class="list-disc">
+                            <div class="flex items-center mb-2 mt-4">
+                                <h3 class="font-bold text-xl mr-1">Ingredients</h3>
+                                <x-bladewind.dropmenu>
+                                    <span onclick="copyToClipboard()">
+                                        <x-bladewind.dropmenu-item>
+                                            Share Clipboard
+                                        </x-bladewind.dropmenu-item>
+                                    </span>
+
+                                    <a href="" id="share-twitter" target="_blank">
+                                        <x-bladewind.dropmenu-item>
+                                            <span>Share Twitter</span>
+                                        </x-bladewind.dropmenu-item>
+                                    </a>
+
+                                    <a href="" id="share-email">
+                                        <x-bladewind.dropmenu-item>
+                                            <span>Share Email</span>
+                                        </x-bladewind.dropmenu-item>
+                                    </a>
+                                </x-bladewind.dropmenu>
+                            </div>
+                            <ul class="list-disc" id="ingredients-list">
                                 @foreach ($ingredients as $ingredient)
                                     <li>{{ $ingredient }}</li>
                                 @endforeach
@@ -65,12 +87,13 @@
                     @foreach ($related_recipes as $related_recipe)
                         <a href="{{ route('recipes.show', $related_recipe->id) }}">
                             <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                                <img class="w-full" src="https://tailwindcss.com/img/card-top.jpg" alt="Sunset in the mountains">
+                                <img class="w-full" src="https://tailwindcss.com/img/card-top.jpg"
+                                    alt="Sunset in the mountains">
                                 <div class="px-6 py-4">
-                                <div class="font-bold text-xl mb-2">{{ $related_recipe->name }}</div>
-                                <p class="text-gray-700 text-base">
-                                    {{ $related_recipe->description }}
-                                </p>
+                                    <div class="font-bold text-xl mb-2">{{ $related_recipe->name }}</div>
+                                    <p class="text-gray-700 text-base">
+                                        {{ $related_recipe->description }}
+                                    </p>
                                 </div>
                             </div>
                         </a>
@@ -159,6 +182,13 @@
     </style>
 
     <script>
+        document.onreadystatechange = function() {
+            if (document.readyState === 'complete') {
+                shareEmail();
+                shareTwitter();
+            }
+        }
+
         function checkform() {
             var selectedRating = document.querySelector('input[name="notation"]:checked');
             if (!selectedRating) {
@@ -166,6 +196,36 @@
                 return false;
             }
             return true;
+        }
+
+        function copyToClipboard() {
+            const ingredientsList = document.getElementById('ingredients-list')
+            let text = ''
+            for (let i = 0; i < ingredientsList.children.length; i++) {
+                text += ingredientsList.children[i].innerText + '\n'
+            }
+            navigator.clipboard.writeText(text);
+        }
+
+        function shareTwitter() {
+            const recipeName = <?php echo json_encode($recipe->name); ?>;
+            const recipeDescription = <?php echo json_encode($recipe->description); ?>;
+            const recipeInstructions = <?php echo json_encode($recipe->instructions); ?>;
+            const recipeIngredients = document.getElementById('ingredients-list').innerText;
+            const twitterUrl =
+                `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${recipeName}\n\nDescription:\n${recipeDescription}\n\nD\écouvrez la recette sur ${window.location.href}`)}`;
+            document.getElementById('share-twitter').href = twitterUrl;
+        }
+
+        function shareEmail() {
+            const recipeName = <?php echo json_encode($recipe->name); ?>;
+            const recipeDescription = <?php echo json_encode($recipe->description); ?>;
+            const recipeInstructions = <?php echo json_encode($recipe->instructions); ?>;
+            const recipeIngredients = document.getElementById('ingredients-list').innerText;
+            const emailBody =
+                `Recipe: ${recipeName}\n\nDescription:\n${recipeDescription}\n\nInstructions:\n${recipeInstructions}\n\nIngredients:\n${recipeIngredients}`;
+            const email = `mailto:?subject=Recipe: ${recipeName}&body=${emailBody}`;
+            document.getElementById('share-email').href = email;
         }
     </script>
 </x-app-layout>
