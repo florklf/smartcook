@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.22.0.
+ * Generated for Laravel 10.28.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -2860,6 +2860,7 @@
          *
          * @param string $path
          * @return bool 
+         * @throws \ErrorException
          * @static 
          */ 
         public static function isExpired($path)
@@ -13370,7 +13371,7 @@
                     /**
          * Create a new redirect response to a controller action.
          *
-         * @param string $action
+         * @param array|string $action
          * @param mixed $parameters
          * @param int $status
          * @param array $headers
@@ -18353,6 +18354,27 @@
         class Str {
          
     }
+            /**
+     * 
+     *
+     * @template TKey of array-key
+     * @template-covariant TValue
+     * @implements \ArrayAccess<TKey, TValue>
+     * @implements \Illuminate\Support\Enumerable<TKey, TValue>
+     */ 
+        class Collection {
+                    /**
+         * 
+         *
+         * @see \Barryvdh\Debugbar\ServiceProvider::register()
+         * @static 
+         */ 
+        public static function debug()
+        {
+                        return \Illuminate\Support\Collection::debug();
+        }
+         
+    }
      
 }
 
@@ -18588,11 +18610,1082 @@
      
 }
 
+    namespace Barryvdh\Debugbar\Facades { 
+            /**
+     * 
+     *
+     * @method static void alert(mixed $message)
+     * @method static void critical(mixed $message)
+     * @method static void debug(mixed $message)
+     * @method static void emergency(mixed $message)
+     * @method static void error(mixed $message)
+     * @method static void info(mixed $message)
+     * @method static void log(mixed $message)
+     * @method static void notice(mixed $message)
+     * @method static void warning(mixed $message)
+     * @see \Barryvdh\Debugbar\LaravelDebugbar
+     */ 
+        class Debugbar {
+                    /**
+         * Enable the Debugbar and boot, if not already booted.
+         *
+         * @static 
+         */ 
+        public static function enable()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->enable();
+        }
+                    /**
+         * Boot the debugbar (add collectors, renderer and listener)
+         *
+         * @static 
+         */ 
+        public static function boot()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->boot();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function shouldCollect($name, $default = false)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->shouldCollect($name, $default);
+        }
+                    /**
+         * Adds a data collector
+         *
+         * @param \DebugBar\DataCollector\DataCollectorInterface $collector
+         * @throws DebugBarException
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function addCollector($collector)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addCollector($collector);
+        }
+                    /**
+         * Handle silenced errors
+         *
+         * @param $level
+         * @param $message
+         * @param string $file
+         * @param int $line
+         * @param array $context
+         * @throws \ErrorException
+         * @static 
+         */ 
+        public static function handleError($level, $message, $file = '', $line = 0, $context = [])
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->handleError($level, $message, $file, $line, $context);
+        }
+                    /**
+         * Starts a measure
+         *
+         * @param string $name Internal name, used to stop the measure
+         * @param string $label Public name
+         * @static 
+         */ 
+        public static function startMeasure($name, $label = null)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->startMeasure($name, $label);
+        }
+                    /**
+         * Stops a measure
+         *
+         * @param string $name
+         * @static 
+         */ 
+        public static function stopMeasure($name)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->stopMeasure($name);
+        }
+                    /**
+         * Adds an exception to be profiled in the debug bar
+         *
+         * @param \Exception $e
+         * @deprecated in favor of addThrowable
+         * @static 
+         */ 
+        public static function addException($e)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addException($e);
+        }
+                    /**
+         * Adds an exception to be profiled in the debug bar
+         *
+         * @param \Throwable $e
+         * @static 
+         */ 
+        public static function addThrowable($e)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addThrowable($e);
+        }
+                    /**
+         * Returns a JavascriptRenderer for this instance
+         *
+         * @param string $baseUrl
+         * @param string $basePathng
+         * @return \Barryvdh\Debugbar\JavascriptRenderer 
+         * @static 
+         */ 
+        public static function getJavascriptRenderer($baseUrl = null, $basePath = null)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getJavascriptRenderer($baseUrl, $basePath);
+        }
+                    /**
+         * Modify the response and inject the debugbar (or data in headers)
+         *
+         * @param \Symfony\Component\HttpFoundation\Request $request
+         * @param \Symfony\Component\HttpFoundation\Response $response
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */ 
+        public static function modifyResponse($request, $response)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->modifyResponse($request, $response);
+        }
+                    /**
+         * Check if the Debugbar is enabled
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isEnabled()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->isEnabled();
+        }
+                    /**
+         * Collects the data from the collectors
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function collect()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->collect();
+        }
+                    /**
+         * Injects the web debug toolbar into the given Response.
+         *
+         * @param \Symfony\Component\HttpFoundation\Response $response A Response instance
+         * Based on https://github.com/symfony/WebProfilerBundle/blob/master/EventListener/WebDebugToolbarListener.php
+         * @static 
+         */ 
+        public static function injectDebugbar($response)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->injectDebugbar($response);
+        }
+                    /**
+         * Disable the Debugbar
+         *
+         * @static 
+         */ 
+        public static function disable()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->disable();
+        }
+                    /**
+         * Adds a measure
+         *
+         * @param string $label
+         * @param float $start
+         * @param float $end
+         * @static 
+         */ 
+        public static function addMeasure($label, $start, $end)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addMeasure($label, $start, $end);
+        }
+                    /**
+         * Utility function to measure the execution of a Closure
+         *
+         * @param string $label
+         * @param \Closure $closure
+         * @return mixed 
+         * @static 
+         */ 
+        public static function measure($label, $closure)
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->measure($label, $closure);
+        }
+                    /**
+         * Collect data in a CLI request
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function collectConsole()
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->collectConsole();
+        }
+                    /**
+         * Adds a message to the MessagesCollector
+         * 
+         * A message can be anything from an object to a string
+         *
+         * @param mixed $message
+         * @param string $label
+         * @static 
+         */ 
+        public static function addMessage($message, $label = 'info')
+        {
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->addMessage($message, $label);
+        }
+                    /**
+         * Checks if a data collector has been added
+         *
+         * @param string $name
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasCollector($name)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->hasCollector($name);
+        }
+                    /**
+         * Returns a data collector
+         *
+         * @param string $name
+         * @return \DebugBar\DataCollector\DataCollectorInterface 
+         * @throws DebugBarException
+         * @static 
+         */ 
+        public static function getCollector($name)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getCollector($name);
+        }
+                    /**
+         * Returns an array of all data collectors
+         *
+         * @return \DebugBar\array[DataCollectorInterface] 
+         * @static 
+         */ 
+        public static function getCollectors()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getCollectors();
+        }
+                    /**
+         * Sets the request id generator
+         *
+         * @param \DebugBar\RequestIdGeneratorInterface $generator
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setRequestIdGenerator($generator)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setRequestIdGenerator($generator);
+        }
+                    /**
+         * 
+         *
+         * @return \DebugBar\RequestIdGeneratorInterface 
+         * @static 
+         */ 
+        public static function getRequestIdGenerator()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getRequestIdGenerator();
+        }
+                    /**
+         * Returns the id of the current request
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getCurrentRequestId()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getCurrentRequestId();
+        }
+                    /**
+         * Sets the storage backend to use to store the collected data
+         *
+         * @param \DebugBar\StorageInterface $storage
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setStorage($storage = null)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setStorage($storage);
+        }
+                    /**
+         * 
+         *
+         * @return \DebugBar\StorageInterface 
+         * @static 
+         */ 
+        public static function getStorage()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getStorage();
+        }
+                    /**
+         * Checks if the data will be persisted
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isDataPersisted()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->isDataPersisted();
+        }
+                    /**
+         * Sets the HTTP driver
+         *
+         * @param \DebugBar\HttpDriverInterface $driver
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setHttpDriver($driver)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setHttpDriver($driver);
+        }
+                    /**
+         * Returns the HTTP driver
+         * 
+         * If no http driver where defined, a PhpHttpDriver is automatically created
+         *
+         * @return \DebugBar\HttpDriverInterface 
+         * @static 
+         */ 
+        public static function getHttpDriver()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getHttpDriver();
+        }
+                    /**
+         * Returns collected data
+         * 
+         * Will collect the data if none have been collected yet
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getData()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getData();
+        }
+                    /**
+         * Returns an array of HTTP headers containing the data
+         *
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @return array 
+         * @static 
+         */ 
+        public static function getDataAsHeaders($headerName = 'phpdebugbar', $maxHeaderLength = 4096, $maxTotalHeaderLength = 250000)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getDataAsHeaders($headerName, $maxHeaderLength, $maxTotalHeaderLength);
+        }
+                    /**
+         * Sends the data through the HTTP headers
+         *
+         * @param bool $useOpenHandler
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function sendDataInHeaders($useOpenHandler = null, $headerName = 'phpdebugbar', $maxHeaderLength = 4096)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->sendDataInHeaders($useOpenHandler, $headerName, $maxHeaderLength);
+        }
+                    /**
+         * Stacks the data in the session for later rendering
+         *
+         * @static 
+         */ 
+        public static function stackData()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->stackData();
+        }
+                    /**
+         * Checks if there is stacked data in the session
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function hasStackedData()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->hasStackedData();
+        }
+                    /**
+         * Returns the data stacked in the session
+         *
+         * @param boolean $delete Whether to delete the data in the session
+         * @return array 
+         * @static 
+         */ 
+        public static function getStackedData($delete = true)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getStackedData($delete);
+        }
+                    /**
+         * Sets the key to use in the $_SESSION array
+         *
+         * @param string $ns
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setStackDataSessionNamespace($ns)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setStackDataSessionNamespace($ns);
+        }
+                    /**
+         * Returns the key used in the $_SESSION array
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getStackDataSessionNamespace()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->getStackDataSessionNamespace();
+        }
+                    /**
+         * Sets whether to only use the session to store stacked data even
+         * if a storage is enabled
+         *
+         * @param boolean $enabled
+         * @return \Barryvdh\Debugbar\LaravelDebugbar 
+         * @static 
+         */ 
+        public static function setStackAlwaysUseSessionStorage($enabled = true)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->setStackAlwaysUseSessionStorage($enabled);
+        }
+                    /**
+         * Checks if the session is always used to store stacked data
+         * even if a storage is enabled
+         *
+         * @return boolean 
+         * @static 
+         */ 
+        public static function isStackAlwaysUseSessionStorage()
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->isStackAlwaysUseSessionStorage();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetSet($key, $value)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetSet($key, $value);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetGet($key)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetGet($key);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetExists($key)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetExists($key);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function offsetUnset($key)
+        {            //Method inherited from \DebugBar\DebugBar         
+                        /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
+                        return $instance->offsetUnset($key);
+        }
+         
+    }
+     
+}
+
+    namespace BotMan\BotMan\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class BotMan {
+                    /**
+         * Set a fallback message to use if no listener matches.
+         *
+         * @param callable $callback
+         * @static 
+         */ 
+        public static function fallback($callback)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->fallback($callback);
+        }
+                    /**
+         * 
+         *
+         * @param string $name The Driver name or class
+         * @static 
+         */ 
+        public static function loadDriver($name)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->loadDriver($name);
+        }
+                    /**
+         * 
+         *
+         * @param \BotMan\BotMan\Interfaces\DriverInterface $driver
+         * @static 
+         */ 
+        public static function setDriver($driver)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->setDriver($driver);
+        }
+                    /**
+         * 
+         *
+         * @return \BotMan\BotMan\Interfaces\DriverInterface 
+         * @static 
+         */ 
+        public static function getDriver()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->getDriver();
+        }
+                    /**
+         * 
+         *
+         * @param \Psr\Container\ContainerInterface $container
+         * @static 
+         */ 
+        public static function setContainer($container)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->setContainer($container);
+        }
+                    /**
+         * Retrieve the chat message.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getMessages()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->getMessages();
+        }
+                    /**
+         * Retrieve the chat message that are sent from bots.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getBotMessages()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->getBotMessages();
+        }
+                    /**
+         * 
+         *
+         * @return \BotMan\BotMan\Messages\Incoming\Answer 
+         * @static 
+         */ 
+        public static function getConversationAnswer()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->getConversationAnswer();
+        }
+                    /**
+         * 
+         *
+         * @param bool $running
+         * @return bool 
+         * @static 
+         */ 
+        public static function runsOnSocket($running = null)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->runsOnSocket($running);
+        }
+                    /**
+         * 
+         *
+         * @return \BotMan\BotMan\Interfaces\UserInterface 
+         * @static 
+         */ 
+        public static function getUser()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->getUser();
+        }
+                    /**
+         * 
+         *
+         * @param array|string $pattern the pattern to listen for
+         * @param \Closure|string $callback the callback to execute. Either a closure or a Class@method notation
+         * @param string $in the channel type to listen to (either direct message or public channel)
+         * @return \BotMan\BotMan\Commands\Command 
+         * @static 
+         */ 
+        public static function hears($pattern, $callback, $in = null)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->hears($pattern, $callback, $in);
+        }
+                    /**
+         * Listen for messaging service events.
+         *
+         * @param array|string $names
+         * @param \Closure|string $callback
+         * @static 
+         */ 
+        public static function on($names, $callback)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->on($names, $callback);
+        }
+                    /**
+         * Listening for image files.
+         *
+         * @param $callback
+         * @return \BotMan\BotMan\Commands\Command 
+         * @static 
+         */ 
+        public static function receivesImages($callback)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->receivesImages($callback);
+        }
+                    /**
+         * Listening for video files.
+         *
+         * @param $callback
+         * @return \BotMan\BotMan\Commands\Command 
+         * @static 
+         */ 
+        public static function receivesVideos($callback)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->receivesVideos($callback);
+        }
+                    /**
+         * Listening for audio files.
+         *
+         * @param $callback
+         * @return \BotMan\BotMan\Commands\Command 
+         * @static 
+         */ 
+        public static function receivesAudio($callback)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->receivesAudio($callback);
+        }
+                    /**
+         * Listening for location attachment.
+         *
+         * @param $callback
+         * @return \BotMan\BotMan\Commands\Command 
+         * @static 
+         */ 
+        public static function receivesLocation($callback)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->receivesLocation($callback);
+        }
+                    /**
+         * Listening for contact attachment.
+         *
+         * @param $callback
+         * @return \BotMan\BotMan\Commands\Command 
+         * @static 
+         */ 
+        public static function receivesContact($callback)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->receivesContact($callback);
+        }
+                    /**
+         * Listening for files attachment.
+         *
+         * @param $callback
+         * @return \BotMan\BotMan\Commands\Command 
+         * @static 
+         */ 
+        public static function receivesFiles($callback)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->receivesFiles($callback);
+        }
+                    /**
+         * Create a command group with shared attributes.
+         *
+         * @param array $attributes
+         * @param \Closure $callback
+         * @static 
+         */ 
+        public static function group($attributes, $callback)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->group($attributes, $callback);
+        }
+                    /**
+         * Try to match messages with the ones we should
+         * listen to.
+         *
+         * @static 
+         */ 
+        public static function listen()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->listen();
+        }
+                    /**
+         * 
+         *
+         * @param string|\BotMan\BotMan\Messages\Outgoing\Question|\BotMan\BotMan\Messages\Outgoing\OutgoingMessage $message
+         * @param string|array $recipients
+         * @param string|\BotMan\BotMan\Interfaces\DriverInterface|null $driver
+         * @param array $additionalParameters
+         * @return \Response 
+         * @throws BotManException
+         * @static 
+         */ 
+        public static function say($message, $recipients, $driver = null, $additionalParameters = [])
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->say($message, $recipients, $driver, $additionalParameters);
+        }
+                    /**
+         * 
+         *
+         * @param string|\BotMan\BotMan\Messages\Outgoing\Question $question
+         * @param array|\Closure $next
+         * @param array $additionalParameters
+         * @param null|string $recipient
+         * @param null|string $driver
+         * @return \Response 
+         * @static 
+         */ 
+        public static function ask($question, $next, $additionalParameters = [], $recipient = null, $driver = null)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->ask($question, $next, $additionalParameters, $recipient, $driver);
+        }
+                    /**
+         * 
+         *
+         * @return \BotMan\BotMan\BotMan 
+         * @static 
+         */ 
+        public static function types()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->types();
+        }
+                    /**
+         * 
+         *
+         * @param float $seconds Number of seconds to wait
+         * @return \BotMan\BotMan\BotMan 
+         * @static 
+         */ 
+        public static function typesAndWaits($seconds)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->typesAndWaits($seconds);
+        }
+                    /**
+         * Low-level method to perform driver specific API requests.
+         *
+         * @param string $endpoint
+         * @param array $additionalParameters
+         * @return \BotMan\BotMan\BotMan 
+         * @throws BadMethodCallException
+         * @static 
+         */ 
+        public static function sendRequest($endpoint, $additionalParameters = [])
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->sendRequest($endpoint, $additionalParameters);
+        }
+                    /**
+         * 
+         *
+         * @param string|\BotMan\BotMan\Messages\Outgoing\OutgoingMessage|\BotMan\BotMan\Messages\Outgoing\Question $message
+         * @param array $additionalParameters
+         * @return mixed 
+         * @static 
+         */ 
+        public static function reply($message, $additionalParameters = [])
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->reply($message, $additionalParameters);
+        }
+                    /**
+         * 
+         *
+         * @param $payload
+         * @return mixed 
+         * @static 
+         */ 
+        public static function sendPayload($payload)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->sendPayload($payload);
+        }
+                    /**
+         * Return a random message.
+         *
+         * @param array $messages
+         * @return \BotMan\BotMan\BotMan 
+         * @static 
+         */ 
+        public static function randomReply($messages)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->randomReply($messages);
+        }
+                    /**
+         * 
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getMatches()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->getMatches();
+        }
+                    /**
+         * 
+         *
+         * @return \BotMan\BotMan\Messages\Incoming\IncomingMessage 
+         * @static 
+         */ 
+        public static function getMessage()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->getMessage();
+        }
+                    /**
+         * 
+         *
+         * @return \BotMan\BotMan\Messages\Outgoing\OutgoingMessage|\BotMan\BotMan\Messages\Outgoing\Question 
+         * @static 
+         */ 
+        public static function getOutgoingMessage()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->getOutgoingMessage();
+        }
+                    /**
+         * 
+         *
+         * @return \Storage 
+         * @static 
+         */ 
+        public static function userStorage()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->userStorage();
+        }
+                    /**
+         * 
+         *
+         * @return \Storage 
+         * @static 
+         */ 
+        public static function channelStorage()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->channelStorage();
+        }
+                    /**
+         * 
+         *
+         * @return \Storage 
+         * @static 
+         */ 
+        public static function driverStorage()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->driverStorage();
+        }
+                    /**
+         * 
+         *
+         * @param \BotMan\BotMan\Messages\Conversations\Conversation $instance
+         * @param null|string $recipient
+         * @param null|string $driver
+         * @static 
+         */ 
+        public static function startConversation($instance, $recipient = null, $driver = null)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->startConversation($instance, $recipient, $driver);
+        }
+                    /**
+         * 
+         *
+         * @param \BotMan\BotMan\Messages\Conversations\Conversation $instance
+         * @param array|\Closure $next
+         * @param string|\BotMan\BotMan\Messages\Outgoing\Question $question
+         * @param array $additionalParameters
+         * @static 
+         */ 
+        public static function storeConversation($instance, $next, $question = null, $additionalParameters = [])
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->storeConversation($instance, $next, $question, $additionalParameters);
+        }
+                    /**
+         * Get a stored conversation array from the cache for a given message.
+         *
+         * @param null|\BotMan\BotMan\Messages\Incoming\IncomingMessage $message
+         * @return array 
+         * @static 
+         */ 
+        public static function getStoredConversation($message = null)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->getStoredConversation($message);
+        }
+                    /**
+         * Touch and update the current conversation.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function touchCurrentConversation()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        $instance->touchCurrentConversation();
+        }
+                    /**
+         * Get the question that was asked in the currently stored conversation
+         * for a given message.
+         *
+         * @param null|\BotMan\BotMan\Messages\Incoming\IncomingMessage $message
+         * @return string|\BotMan\BotMan\Messages\Outgoing\Question 
+         * @static 
+         */ 
+        public static function getStoredConversationQuestion($message = null)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->getStoredConversationQuestion($message);
+        }
+                    /**
+         * Remove a stored conversation array from the cache for a given message.
+         *
+         * @param null|\BotMan\BotMan\Messages\Incoming\IncomingMessage $message
+         * @static 
+         */ 
+        public static function removeStoredConversation($message = null)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->removeStoredConversation($message);
+        }
+                    /**
+         * 
+         *
+         * @param \Closure $closure
+         * @return string 
+         * @static 
+         */ 
+        public static function serializeClosure($closure)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->serializeClosure($closure);
+        }
+                    /**
+         * Look for active conversations and clear the payload
+         * if a conversation is found.
+         *
+         * @static 
+         */ 
+        public static function loadActiveConversation()
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->loadActiveConversation();
+        }
+                    /**
+         * Register a custom exception handler.
+         *
+         * @param string $exception
+         * @param callable $closure
+         * @static 
+         */ 
+        public static function exception($exception, $closure)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->exception($exception, $closure);
+        }
+                    /**
+         * 
+         *
+         * @param \BotMan\BotMan\Interfaces\ExceptionHandlerInterface $exceptionHandler
+         * @static 
+         */ 
+        public static function setExceptionHandler($exceptionHandler)
+        {
+                        /** @var \BotMan\BotMan\BotMan $instance */
+                        return $instance->setExceptionHandler($exceptionHandler);
+        }
+         
+    }
+     
+}
+
     namespace Livewire { 
             /**
      * 
      *
-     * @method static void setUpdateUri()
      * @see \Livewire\LivewireManager
      */ 
         class Livewire {
@@ -18855,6 +19948,26 @@
         {
                         /** @var \Livewire\LivewireManager $instance */
                         return $instance->withQueryParams($params);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function withCookie($name, $value)
+        {
+                        /** @var \Livewire\LivewireManager $instance */
+                        return $instance->withCookie($name, $value);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function withCookies($cookies)
+        {
+                        /** @var \Livewire\LivewireManager $instance */
+                        return $instance->withCookies($cookies);
         }
                     /**
          * 
@@ -19562,6 +20675,17 @@
         public static function layout($view, $params = [])
         {
                         return \Illuminate\View\View::layout($view, $params);
+        }
+                    /**
+         * 
+         *
+         * @see \Livewire\Features\SupportPageComponents\SupportPageComponents::registerLayoutViewMacros()
+         * @param callable $callback
+         * @static 
+         */ 
+        public static function response($callback)
+        {
+                        return \Illuminate\View\View::response($callback);
         }
          
     }
@@ -20526,6 +21650,39 @@ namespace  {
             }
              
                 /**
+             * Chunk the results of a query by comparing IDs in descending order.
+             *
+             * @param int $count
+             * @param callable $callback
+             * @param string|null $column
+             * @param string|null $alias
+             * @return bool 
+             * @static 
+             */ 
+            public static function chunkByIdDesc($count, $callback, $column = null, $alias = null)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->chunkByIdDesc($count, $callback, $column, $alias);
+            }
+             
+                /**
+             * Chunk the results of a query by comparing IDs in a given order.
+             *
+             * @param int $count
+             * @param callable $callback
+             * @param string|null $column
+             * @param string|null $alias
+             * @param bool $descending
+             * @return bool 
+             * @static 
+             */ 
+            public static function orderedChunkById($count, $callback, $column = null, $alias = null, $descending = false)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->orderedChunkById($count, $callback, $column, $alias, $descending);
+            }
+             
+                /**
              * Execute a callback over each item while chunking by ID.
              *
              * @param callable $callback
@@ -21347,7 +22504,7 @@ namespace  {
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
              * @param \Closure|string $first
              * @param string|null $operator
-             * @param string|null $second
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @param string $type
              * @param bool $where
              * @return \Illuminate\Database\Query\Builder 
@@ -21365,7 +22522,7 @@ namespace  {
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
              * @param \Closure|string $first
              * @param string $operator
-             * @param string $second
+             * @param \Illuminate\Contracts\Database\Query\Expression|string $second
              * @param string $type
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -21383,7 +22540,7 @@ namespace  {
              * @param string $as
              * @param \Closure|string $first
              * @param string|null $operator
-             * @param string|null $second
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @param string $type
              * @param bool $where
              * @return \Illuminate\Database\Query\Builder 
@@ -21402,7 +22559,7 @@ namespace  {
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
              * @param \Closure|string $first
              * @param string|null $operator
-             * @param string|null $second
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -21418,7 +22575,7 @@ namespace  {
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
              * @param \Closure|string $first
              * @param string $operator
-             * @param string $second
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -21435,7 +22592,7 @@ namespace  {
              * @param string $as
              * @param \Closure|string $first
              * @param string|null $operator
-             * @param string|null $second
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -21451,7 +22608,7 @@ namespace  {
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
              * @param \Closure|string $first
              * @param string|null $operator
-             * @param string|null $second
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -21467,7 +22624,7 @@ namespace  {
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
              * @param \Closure|string $first
              * @param string $operator
-             * @param string $second
+             * @param \Illuminate\Contracts\Database\Query\Expression|string $second
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -21484,7 +22641,7 @@ namespace  {
              * @param string $as
              * @param \Closure|string $first
              * @param string|null $operator
-             * @param string|null $second
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -21500,7 +22657,7 @@ namespace  {
              * @param \Illuminate\Contracts\Database\Query\Expression|string $table
              * @param \Closure|string|null $first
              * @param string|null $operator
-             * @param string|null $second
+             * @param \Illuminate\Contracts\Database\Query\Expression|string|null $second
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -23495,6 +24652,8 @@ namespace  {
             class View extends \Illuminate\Support\Facades\View {}
             class Vite extends \Illuminate\Support\Facades\Vite {}
             class Popper extends \andcarpi\Popper\Facades\Popper {}
+            class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
+            class BotMan extends \BotMan\BotMan\Facades\BotMan {}
             class Livewire extends \Livewire\Livewire {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
      

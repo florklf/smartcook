@@ -58,23 +58,11 @@ class RecipeController extends Controller
         $userHasFavorited = Auth::user() && Auth::user()->favoriteRecipes->contains('id', $recipe->id);
         $notations = Notation::where('recipe_id', $recipe->id)->orderBy('created_at', 'desc')->take(5)->get();
 
-        $client = OpenAIService::getClient();
+        $openAIService = new OpenAiService();
+        
+        $ingredients = $openAIService->getIngredients($recipe);
+        $related_recipes = $openAIService->getRelatedRecipes($recipe);
 
-        // Related recipes
-        $related_recipes_prompt = 'Provide a comma-separated list of recipes that are similar (culinary-speaking) to "' . $recipe->name . '".\n' . 'Here is the list of all recipes in the database:\n' . implode("\n", Recipe::all()->except($recipe->id)->pluck('name')->toArray()) . '\n';
-        $related_recipes_response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'system', 'content' => 'The following are recipes that is similar to "' . $recipe->name . '". Only return the name found in the completion as a comma-separated list. I don\'t want any other comments. Don\'t say "here is your list" or similar remarks.'],
-                ['role' => 'user', 'content' => $related_recipes_prompt],
-            ],
-        ]);
-        $related_recipes = $related_recipes_response['choices'][0]['message']['content'];
-        $related_recipes = explode(',', $related_recipes);
-        $related_recipes = array_map(function ($value) {
-            return trim($value);
-        }, $related_recipes);
-        $related_recipes = Recipe::whereIn('name', $related_recipes)->where('id', '!=', $recipe->id)->get()->take(4);
         if ($related_recipes->count() == 0) {
             $related_recipes = Recipe::inRandomOrder()->take(4)->get();
         }
