@@ -132,6 +132,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer hide-pwd hidden" onclick="togglePassword(\''.$name.'\', \'hide\')"><path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" /></svg>';
         $suffix_is_icon = true;
     }
+    if($errors->has($name) || $errors->has($attributes->whereStartsWith('wire:model')->first())) {
+        $errors = $errors->get($name) ? $errors->get($name) : $errors->get($attributes->whereStartsWith('wire:model')->first());
+    }
 @endphp
 
 <div class="relative w-full dv-{{$name}} @if($add_clearing) mb-3 @endif">
@@ -150,7 +153,11 @@
             data-error-heading="{{$error_heading}}" 
         @endif 
     />
-    @if(!empty($error_message))<div class="text-red-500 text-xs p-1 {{ $name }}-inline-error hidden">{{$error_message}}</div>@endif
+    @if($errors)
+        @foreach ($errors as $error)
+            <div class="text-red-500 text-xs p-1 {{ $name }}-inline-error">{{ $error }}</div>
+        @endforeach
+    @endif
     @if(!empty($label))
         <label for="{{ $name }}" class="form-label" onclick="dom_el('.{{$name}}').focus()">{!! $label !!} 
             @if($required) <x-bladewind::icon name="star" class="!text-red-400 !w-2 !h-2 mt-[-2px]" type="solid" /> @endif

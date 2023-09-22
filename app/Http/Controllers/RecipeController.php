@@ -34,21 +34,6 @@ class RecipeController extends Controller
         $notations = Notation::where('recipe_id', $recipe->id)->orderBy('created_at', 'desc')->take(5)->get();
 
         $client = OpenAIService::getClient();
-        
-        // Ingredients
-        $ingredients_prompt = 'Provide the list of ingredients needed to cook a recipe titled "' . $recipe->name . '".\n' . 'To make it easier, you can extract the ingredients from the following recipe instructions if needed:\n' . implode("\n", $recipe->instructions) . '\n';
-        $ingredients_response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo-16k',
-            'messages' => [
-                ['role' => 'system', 'content' => 'The following is a list of ingredients needed to cook the recipe titled "' . $recipe->name . '". Return only the ingredients in the completion as a comma-separated list in french language. I don\'t want any other comments. Don\'t say "here is your list" or similar remarks.'],
-                ['role' => 'user', 'content' => $ingredients_prompt],
-            ],
-        ]);
-        $ingredients = $ingredients_response['choices'][0]['message']['content'];
-        $ingredients = explode(',', $ingredients);
-        $ingredients = array_map(function ($value) {
-            return ucfirst(trim($value));
-        }, $ingredients);
 
         // Related recipes
         $related_recipes_prompt = 'Provide a comma-separated list of recipes that are similar (culinary-speaking) to "' . $recipe->name . '".\n' . 'Here is the list of all recipes in the database:\n' . implode("\n", Recipe::all()->except($recipe->id)->pluck('name')->toArray()) . '\n';
@@ -74,7 +59,6 @@ class RecipeController extends Controller
             'notations' => $notations,
             'userHasNotated' => $userHasNotated,
             'userHasFavorited' => $userHasFavorited,
-            'ingredients' => $ingredients,
             'related_recipes' => $related_recipes,
         ]);
     }

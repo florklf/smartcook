@@ -35,6 +35,8 @@
                 {{ $slot }}
             </main>
         </div>
+        @livewire('wire-elements-modal')
+        @include('popper::assets')
     </body>
 
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
