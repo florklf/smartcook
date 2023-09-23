@@ -32,7 +32,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-bladewind.button can_submit>Sauvegarder</x-bladewind.button>
 
             @if (session('status') === 'password-updated')
                 <p
