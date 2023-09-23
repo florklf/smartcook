@@ -47,8 +47,27 @@
             @endif
         </div>
 
+    
+        <x-input-label value="Allergies" />
+        @foreach ($allergies as $allergy)
+            <x-bladewind.checkbox
+            name="allergies[]"
+            :value="$allergy->id"
+            :checked="$user->dietaryRestrictions->contains($allergy->id)"
+            :label="__('preferences.dietary_restrictions.allergies.'.$allergy->name)" />
+        @endforeach
+
+        <x-input-label value="Régimes" />
+        @foreach ($diets as $diet)
+            <x-bladewind.checkbox
+            name="diets[]"
+            :value="$diet->id"
+            :checked="$user->dietaryRestrictions->contains($diet->id)"
+            :label="__('preferences.dietary_restrictions.diets.'.$diet->name)" />
+        @endforeach
+
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-bladewind.button can_submit>Sauvegarder</x-bladewind.button>
 
             @if (session('status') === 'profile-updated')
                 <p

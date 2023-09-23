@@ -22,7 +22,7 @@ class Recipe extends Model
         return $this->hasMany(Notation::class);
     }
 
-    public function favoriteRecipe(): BelongsToMany
+    public function favoriteRecipes(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'favorite_recipes');
     }

@@ -11,7 +11,7 @@
             </div>
             <div>
                 @if (Auth::user())
-                    <form action="{{ route('recipes.favorite') }}" method="POST">
+                    <form action="{{ route('recipes.addFavorite') }}" method="POST">
                         @csrf
                         <input type="hidden" name="recipe_id" value="{{ $recipe->id }}">
                         <x-bladewind.button can_submit radius="small" size="small" :color="$userHasFavorited ? 'red' : 'green'">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\DietaryRestriction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +17,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $allergies = DietaryRestriction::allergies()->get();
+        $diets = DietaryRestriction::diets()->get();
         return view('profile.edit', [
             'user' => $request->user(),
+            'allergies' => $allergies,
+            'diets' => $diets,
         ]);
     }
 
@@ -27,6 +32,12 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
+        
+
+        $request->user()->dietaryRestrictions()->sync(array_merge(
+            $request->input('allergies', []),
+            $request->input('diets', [])
+        ));
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;

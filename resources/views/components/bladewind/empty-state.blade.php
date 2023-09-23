@@ -16,7 +16,7 @@
     if ($buttonLabel !== $button_label) $button_label = $buttonLabel;
     if (! $showImage) $show_image = $showImage;
 @endphp
-<div class="text-center px-4 pb-10 bw-empty-state {{$class}}">
+<div class="text-center px-4 py-10 bw-empty-state {{$class}}">
     @if($show_image == 'true')<img src="{{ $image }}" class="h-52 mx-auto mb-6" />@endif
     @if($heading != '')<div class="text-slate-700 dark:text-dark-400 text-2xl pt-4 pb-3 px-4 font-light">{!!$heading!!}</div>@endif
     @if($message != '')<div class="text-slate-600/70 dark:text-dark-500 px-6">{!!$message!!}</div>@endif

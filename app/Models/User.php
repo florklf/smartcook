@@ -58,8 +58,13 @@ class User extends Authenticatable
     /**
      * Get the favorite recipe for the user.
      */
-    public function favoriteRecipe(): BelongsToMany
+    public function favoriteRecipes(): BelongsToMany
     {
         return $this->belongsToMany(Recipe::class, 'favorite_recipes');
+    }
+
+    public function dietaryRestrictions(): BelongsToMany
+    {
+        return $this->belongsToMany(DietaryRestriction::class, 'users_preferences', 'user_id', 'dietary_restriction_id');
     }
 }
