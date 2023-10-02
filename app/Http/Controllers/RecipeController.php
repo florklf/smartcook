@@ -25,10 +25,10 @@ class RecipeController extends Controller
         if ($request->input('search')) {
             $recipes_prompt .= 'Filter this list by only including those that correspond to this user search: ' . $request->input('search') . ".\n";
         }
-        if (Auth::user()->dietaryRestrictions()->allergies()->count() > 0) {
+        if (Auth::user() && Auth::user()->dietaryRestrictions()->allergies()->count() > 0) {
             $recipes_prompt .= 'Filter this list by including only recipes that are compatible with the following allergies: ' . implode(", ", Auth::user()->dietaryRestrictions()->allergies()->pluck('name')->toArray()) . ".\n";
         }
-        if (Auth::user()->dietaryRestrictions()->diets()->count() > 0) {
+        if (Auth::user() && Auth::user()->dietaryRestrictions()->diets()->count() > 0) {
             $recipes_prompt .= 'Filter this list by including only recipes that are compatible with the following diets: ' . implode(", ", Auth::user()->dietaryRestrictions()->diets()->pluck('name')->toArray()) . ".\n";
         }
 

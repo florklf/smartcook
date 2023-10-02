@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <form action="">
-                <x-bladewind.input name="search" can_submit placeholder="Rechercher..."  />
+                <x-bladewind.input name="search" can_submit placeholder="Je veux une recette..."  />
             </form>
         </div>
 
