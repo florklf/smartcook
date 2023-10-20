@@ -16,6 +16,7 @@
 
         <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet" />
         <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/assets/css/chat.min.css" />
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -40,4 +41,12 @@
     </body>
 
     <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
+    <script>
+        var botmanWidget = {
+            aboutText: 'Demandez quelque chose au chef',
+            introMessage: "Bonjour ! Je suis un chef étoilé au guide michelin ayant une 15aines d'années d'expérience. Comment puis-je vous aider ?",
+            title: 'Chatbot',
+        };
+    </script>
+    <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
 </html>

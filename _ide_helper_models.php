@@ -12,6 +12,25 @@
 
 namespace App\Models{
 /**
+ * App\Models\DietaryRestriction
+ *
+ * @property int $user_id
+ * @property string $type
+ * @property string $name
+ * @method static \Illuminate\Database\Eloquent\Builder|DietaryRestriction allergies()
+ * @method static \Illuminate\Database\Eloquent\Builder|DietaryRestriction diets()
+ * @method static \Illuminate\Database\Eloquent\Builder|DietaryRestriction newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DietaryRestriction newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DietaryRestriction query()
+ * @method static \Illuminate\Database\Eloquent\Builder|DietaryRestriction whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DietaryRestriction whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DietaryRestriction whereUserId($value)
+ */
+	class DietaryRestriction extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Notation
  *
  * @property int $user_id
@@ -74,6 +93,8 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DietaryRestriction> $dietaryRestrictions
+ * @property-read int|null $dietary_restrictions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $favoriteRecipes
  * @property-read int|null $favorite_recipes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Notation> $notations
