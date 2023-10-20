@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Models\Recipe;
+use Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Facade;
 use OpenAI;
 
@@ -46,5 +49,32 @@ class OpenAIService extends Facade
     ]);
     $related_recipes = array_map(fn($value) => trim($value), explode(',', $related_recipes_response['choices'][0]['message']['content']));
     return Recipe::whereIn('name', $related_recipes)->where('id', '!=', $recipe->id)->get()->take(4);
+  }
+
+  public function getRecipes(Request $request)
+  {
+    $recipes_prompt = "Here is the list of all recipes in the database:\n" . implode("\n", Recipe::all()->pluck('name')->toArray()) . "\n";
+    if ($request->input('search')) {
+        $recipes_prompt .= 'Filter this list by only including those that correspond to this user search: ' . $request->input('search') . ".\n";
+    }
+    if (Auth::user() && Auth::user()->dietaryRestrictions()->allergies()->count() > 0) {
+        $recipes_prompt .= 'Filter this list by including only recipes that are compatible with the following allergies: ' . implode(", ", Auth::user()->dietaryRestrictions()->allergies()->pluck('name')->toArray()) . ".\n";
+    }
+    if (Auth::user() && Auth::user()->dietaryRestrictions()->diets()->count() > 0) {
+        $recipes_prompt .= 'Filter this list by including only recipes that are compatible with the following diets: ' . implode(", ", Auth::user()->dietaryRestrictions()->diets()->pluck('name')->toArray()) . ".\n";
+    }
+
+    $recipes_response = $this->client->chat()->create([
+        'model' => 'gpt-3.5-turbo',
+        'messages' => [
+            ['role' => 'system', 'content' => 'Only return the filtered list found as a comma-separated list. I don\'t want any other comments. Don\'t say "here is your list" or similar remarks.'],
+            ['role' => 'user', 'content' => $recipes_prompt],
+        ],
+    ]);
+
+    $recipes = $recipes_response['choices'][0]['message']['content'];
+    $recipes = explode(',', $recipes);
+    $recipes = Recipe::whereIn('name', Arr::map($recipes, fn($value) => trim($value)))->paginate(9);
+    return $recipes;
   }
 }

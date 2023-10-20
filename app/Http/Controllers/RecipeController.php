@@ -19,30 +19,9 @@ class RecipeController extends Controller
      */
     public function index(Request $request): View
     {
-        $client = OpenAIService::getClient();
+        $openAIService = new OpenAiService();
 
-        $recipes_prompt = "Here is the list of all recipes in the database:\n" . implode("\n", Recipe::all()->pluck('name')->toArray()) . "\n";
-        if ($request->input('search')) {
-            $recipes_prompt .= 'Filter this list by only including those that correspond to this user search: ' . $request->input('search') . ".\n";
-        }
-        if (Auth::user() && Auth::user()->dietaryRestrictions()->allergies()->count() > 0) {
-            $recipes_prompt .= 'Filter this list by including only recipes that are compatible with the following allergies: ' . implode(", ", Auth::user()->dietaryRestrictions()->allergies()->pluck('name')->toArray()) . ".\n";
-        }
-        if (Auth::user() && Auth::user()->dietaryRestrictions()->diets()->count() > 0) {
-            $recipes_prompt .= 'Filter this list by including only recipes that are compatible with the following diets: ' . implode(", ", Auth::user()->dietaryRestrictions()->diets()->pluck('name')->toArray()) . ".\n";
-        }
-
-        $recipes_response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'system', 'content' => 'Only return the filtered list found as a comma-separated list. I don\'t want any other comments. Don\'t say "here is your list" or similar remarks.'],
-                ['role' => 'user', 'content' => $recipes_prompt],
-            ],
-        ]);
-
-        $recipes = $recipes_response['choices'][0]['message']['content'];
-        $recipes = explode(',', $recipes);
-        $recipes = Recipe::whereIn('name', Arr::map($recipes, fn($value) => trim($value)))->paginate(9);
+        $recipes = $openAIService->getRecipes($request);
 
         return view('home', ['recipes' => $recipes]);
     }

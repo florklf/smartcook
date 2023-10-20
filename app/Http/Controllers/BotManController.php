@@ -39,7 +39,6 @@ class BotManController extends Controller
             Redis::set('messages', json_encode($this->messages));
             Redis::expire('messages', 60 * 10);
             $botman->reply($this->messages[array_key_last($this->messages)]['content']);
-            dump($this->messages);
         });
    
         $botman->listen();
