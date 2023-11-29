@@ -28,9 +28,9 @@ class Sides extends Component
 
     public function loadSides()
     {
-        $client = OpenAIService::getClient();
-        // sleep(5);
-        // // Proposition d'accompagnements intelligent
+        $service = new OpenAIService();
+        $client = $service->getClient();
+        // Proposition d'accompagnements intelligent
         $side_prompt = 'Provide a comma-separated list of side dishes that go well with "' . $this->recipe->name . '" such as wine, desserts or cheeses. Only return a comma-separated list of the side dishes. I don\'t want any other comments. Don\'t say "here is your list" or similar remarks. Answer in french.';
         $side_response = $client->chat()->create([
             'model' => 'gpt-3.5-turbo',

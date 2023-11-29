@@ -46,7 +46,8 @@ class Ingredients extends Component
 
     public function loadIngredients()
     {
-        $client = OpenAIService::getClient();
+        $service = new OpenAIService();
+        $client = $service->getClient();
 
         $this->validate();
 
