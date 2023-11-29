@@ -35,7 +35,7 @@ class BotManController extends Controller
                 'model' => 'gpt-3.5-turbo',
                 'messages' => array_merge([['role' => 'system', 'content' => $this->systemPrompt]], $this->messages),
             ]);
-            $this->messages[] = $response['choices'][0]['message'];
+            $this->messages[] = str_replace("\n", "<br />", $response['choices'][0]['message']);
             Redis::set('messages', json_encode($this->messages));
             Redis::expire('messages', 60 * 10);
             $botman->reply($this->messages[array_key_last($this->messages)]['content']);
